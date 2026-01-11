@@ -7,6 +7,7 @@ private:
     int *array;
     int currentPosition;
     void Shrink();
+    void Expand();
 public:
     List();
     void Add(int item);

@@ -15,11 +15,7 @@ List::List() {
 void List::Add(const int item) {
     currentPosition++;
     if (currentPosition == size) {
-        size = size * 2;
-        const auto newArray = new int[size];
-        memcpy(newArray, array, size * sizeof(int));
-        free(array);
-        array = newArray;
+        Expand();
     }
     array[currentPosition] = item;
 }
@@ -54,6 +50,14 @@ void List::Shrink() {
     if (size < 200)
         return;
     size = size / 2;
+    const auto newArray = new int[size];
+    memcpy(newArray, array, size * sizeof(int));
+    free(array);
+    array = newArray;
+}
+
+void List::Expand() {
+    size = size * 2;
     const auto newArray = new int[size];
     memcpy(newArray, array, size * sizeof(int));
     free(array);
