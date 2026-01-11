@@ -1,6 +1,4 @@
-//
-// Created by cemre on 11.01.2026.
-//
+
 
 #include "List.h"
 #include <iostream>
