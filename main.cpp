@@ -38,16 +38,16 @@ public:
 
     [[nodiscard]] int Get(const int item) const {
         if (item > currentPosition)
-            throw std::out_of_range("Item out of range");
+            throw std::out_of_range("Index out of range");
         return array[item];
     }
     int& operator[](const int item) const {
         if (item > currentPosition)
-            throw std::out_of_range("Item out of range");
+            throw std::out_of_range("Index out of range");
         return array[item];
     }
     void RemoveAt(int const index) {
-        if (index < 0 || index >= currentPosition) return;
+        if (index < 0 || index >= currentPosition) throw std::out_of_range("Index out of range");
         currentPosition--;
         const int *source = &array[index + 1];
         int *destination = &array[index];
@@ -72,5 +72,16 @@ int main() {
     }
     cout << l1[99] << endl;
     cout << l1.Get(2) << endl;
+    try {
+        cout<<l1[100]<<endl;
+
+    } catch (out_of_range &e) {
+        cout << e.what() << endl;
+    }
+    try {
+        l1.RemoveAt(100);
+    } catch (out_of_range &e) {
+        cout<< e.what()<<endl;
+    }
     return 0;
 }
