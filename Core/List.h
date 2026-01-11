@@ -12,7 +12,7 @@ public:
     void Add(int item);
     [[nodiscard]] int Get(int item) const;
     int &operator[](int item) const;
-    void RemoveAt(int kindex);
+    void RemoveAt(int index);
     ~List();
 };
 
