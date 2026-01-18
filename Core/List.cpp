@@ -45,12 +45,12 @@ int &List::operator[](const int item) const {
 
 
 void List::Shrink() {
-    if (size < 200)
+    if (size==1)
         return;
     size = size / 2;
     const auto newArray = new int[size];
     memcpy(newArray, array, size * sizeof(int));
-    free(array);
+    delete[] array;
     array = newArray;
 }
 
@@ -58,10 +58,10 @@ void List::Expand() {
     size = size * 2;
     const auto newArray = new int[size];
     memcpy(newArray, array, size * sizeof(int));
-    free(array);
+    delete[] array;
     array = newArray;
 }
 
 List::~List() {
-    free(array);
+    delete[] array;
 }
