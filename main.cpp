@@ -14,7 +14,27 @@ void Test_AddAndExpand() {
     assert(list[4] == 50);
     std::cout << "SUCCESSFUL" << std::endl;
 }
+void Test_ElementShifting() {
+    std::cout << "Test: Element Shifting (Kaydirma)... ";
+    List list;
 
+
+    list.Add(10);
+    list.Add(20);
+    list.Add(30);
+    list.Add(40);
+    list.Add(50);
+
+    list.RemoveAt(1);
+
+    assert(list.Count() == 4);
+    assert(list[0] == 10);
+    assert(list[1] == 30);
+    assert(list[2] == 40);
+    assert(list[3] == 50);
+
+    std::cout << "SUCCESSFUL" << std::endl;
+}
 void Test_RemoveAndShrink() {
     std::cout << "Test: Remove ve Shrink... ";
     List list;
@@ -47,5 +67,6 @@ int main() {
     Test_AddAndExpand();
     Test_RemoveAndShrink();
     Test_Exceptions();
+    Test_ElementShifting();
     return 0;
 }

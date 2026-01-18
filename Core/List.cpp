@@ -20,15 +20,17 @@ void List::Add(const int item) {
 
 void List::RemoveAt(int const index) {
     if (index < 0 || index >= currentPosition) throw std::out_of_range("Index out of range");
-    currentPosition--;
+
     const int *source = &array[index + 1];
     int *destination = &array[index];
-    if (const int elementsToMove = currentPosition - index - 1; elementsToMove > 0) {
+    const int elementsToMove = currentPosition - index;
+    if (elementsToMove > 0) {
         memmove(destination, source, elementsToMove * sizeof(int));
     }
     if (static_cast<float>(currentPosition) / static_cast<float>(size) <= 0.2) {
         this->Shrink();
     }
+    currentPosition--;
 }
 
 int List::Get(const int item) const {
