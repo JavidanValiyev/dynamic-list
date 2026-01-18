@@ -6,21 +6,43 @@
 using namespace std;
 using namespace std::chrono;
 
-void Benchmark() {
-    const int N = 100000; // 100 bin eleman
+void BenchmarkRemove() {
+    const int N = 2000000;
+    const int targetIndex = 500000;
 
-    // --- 1. SENIN LIST SINIFIN TESTI ---
+    List myList;
+    for (int i = 0; i < N; i++) myList.Add(i);
+
+    auto start = high_resolution_clock::now();
+    myList.RemoveAt(targetIndex);
+    auto stop = high_resolution_clock::now();
+
+    auto durationList = duration_cast<microseconds>(stop - start);
+
+    vector<int> myVector;
+    for (int i = 0; i < N; i++) myVector.push_back(i);
+
+    start = high_resolution_clock::now();
+    myVector.erase(myVector.begin() + targetIndex);
+    stop = high_resolution_clock::now();
+
+    auto durationVector = duration_cast<microseconds>(stop - start);
+
+
+    cout << "       --- 2.000.000 items, Deleting element from middle of list ---" << endl;
+    cout << "List::RemoveAt (memmove):  " << durationList.count() << " us (microsecond)" << endl;
+    cout << "Vector::erase:             " << durationVector.count() << " us (microsecond)" << endl;
+}
+void Benchmark() {
+    const int N = 1000000;
     List myList;
     auto start = high_resolution_clock::now();
 
     for (int i = 0; i < N; i++) {
         myList.Add(i);
     }
-
     auto stop = high_resolution_clock::now();
-    auto durationListAdd = duration_cast<milliseconds>(stop - start);
-
-    // --- 2. STD::VECTOR TESTI ---
+    const auto durationListAdd = duration_cast<milliseconds>(stop - start);
     vector<int> myVector;
     start = high_resolution_clock::now();
 
@@ -29,10 +51,8 @@ void Benchmark() {
     }
 
     stop = high_resolution_clock::now();
-    auto durationVectorAdd = duration_cast<milliseconds>(stop - start);
-
-    // SONUÇLARI YAZDIR
-    cout << "--- Performans Sonuclari (100.000 Eleman) ---" << endl;
+    const auto durationVectorAdd = duration_cast<milliseconds>(stop - start);
+    cout << "       --- Performance Results (100.000 Items) ---" << endl;
     cout << "List::Add:    " << durationListAdd.count() << " ms" << endl;
     cout << "Vector::push_back: " << durationVectorAdd.count() << " ms" << endl;
 }
@@ -48,7 +68,7 @@ void Test_AddAndExpand() {
     std::cout << "SUCCESSFUL" << std::endl;
 }
 void Test_ElementShifting() {
-    std::cout << "Test: Element Shifting (Kaydirma)... ";
+    std::cout << "Test: Element Shifting... ";
     List list;
 
 
@@ -97,10 +117,18 @@ void Test_Exceptions() {
 }
 
 int main() {
+    cout << "-------------------------------------------------------------------"<<endl;
     Benchmark();
-    // Test_AddAndExpand();
-    // Test_RemoveAndShrink();
-    // Test_Exceptions();
-    // Test_ElementShifting();
+    cout << "-------------------------------------------------------------------"<<endl;
+    BenchmarkRemove();
+    cout << "-------------------------------------------------------------------"<<endl;
+    Test_AddAndExpand();
+    cout << "-------------------------------------------------------------------"<<endl;
+    Test_RemoveAndShrink();
+    cout << "-------------------------------------------------------------------"<<endl;
+    Test_Exceptions();
+    cout << "-------------------------------------------------------------------"<<endl;
+    Test_ElementShifting();
+    cout << "-------------------------------------------------------------------"<<endl;
     return 0;
 }
