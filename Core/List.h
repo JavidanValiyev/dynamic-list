@@ -3,7 +3,7 @@
 
 struct List {
 private:
-    int size = 100;
+    int size = 2;
     int *array;
     int currentPosition;
     void Shrink();
