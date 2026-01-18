@@ -1,8 +1,41 @@
 #include <iostream>
 #include <cassert>
 #include "Core/List.h"
+#include <vector>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
+void Benchmark() {
+    const int N = 100000; // 100 bin eleman
+
+    // --- 1. SENIN LIST SINIFIN TESTI ---
+    List myList;
+    auto start = high_resolution_clock::now();
+
+    for (int i = 0; i < N; i++) {
+        myList.Add(i);
+    }
+
+    auto stop = high_resolution_clock::now();
+    auto durationListAdd = duration_cast<milliseconds>(stop - start);
+
+    // --- 2. STD::VECTOR TESTI ---
+    vector<int> myVector;
+    start = high_resolution_clock::now();
+
+    for (int i = 0; i < N; i++) {
+        myVector.push_back(i);
+    }
+
+    stop = high_resolution_clock::now();
+    auto durationVectorAdd = duration_cast<milliseconds>(stop - start);
+
+    // SONUÇLARI YAZDIR
+    cout << "--- Performans Sonuclari (100.000 Eleman) ---" << endl;
+    cout << "List::Add:    " << durationListAdd.count() << " ms" << endl;
+    cout << "Vector::push_back: " << durationVectorAdd.count() << " ms" << endl;
+}
 void Test_AddAndExpand() {
     std::cout << "Test: Add ve Expand... ";
     List list;
@@ -64,9 +97,10 @@ void Test_Exceptions() {
 }
 
 int main() {
-    Test_AddAndExpand();
-    Test_RemoveAndShrink();
-    Test_Exceptions();
-    Test_ElementShifting();
+    Benchmark();
+    // Test_AddAndExpand();
+    // Test_RemoveAndShrink();
+    // Test_Exceptions();
+    // Test_ElementShifting();
     return 0;
 }

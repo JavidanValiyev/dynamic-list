@@ -1,5 +1,3 @@
-
-
 #include "List.h"
 #include <iostream>
 #include <cstring>
@@ -47,8 +45,7 @@ int &List::operator[](const int item) const {
 
 
 void List::Shrink() {
-    if (size==1)
-        return;
+    if (size <= 1) return;
     size = size / 2;
     const auto newArray = new int[size];
     memcpy(newArray, array, size * sizeof(int));
@@ -57,15 +54,16 @@ void List::Shrink() {
 }
 
 void List::Expand() {
+    const int oldSize = size;
     size = size * 2;
-    const auto newArray = new int[size];
-    memcpy(newArray, array, size * sizeof(int));
+    int *newArray = new int[size];
+    memcpy(newArray, array, oldSize * sizeof(int));
     delete[] array;
     array = newArray;
 }
 
 int List::Count() const {
-    return currentPosition+1;
+    return currentPosition + 1;
 }
 
 List::~List() {
