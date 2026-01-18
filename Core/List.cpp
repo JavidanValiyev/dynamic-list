@@ -62,6 +62,10 @@ void List::Expand() {
     array = newArray;
 }
 
+int List::Count() const {
+    return currentPosition+1;
+}
+
 List::~List() {
     delete[] array;
 }

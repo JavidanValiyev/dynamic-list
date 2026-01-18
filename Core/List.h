@@ -9,6 +9,7 @@ private:
     void Shrink();
     void Expand();
 public:
+    [[nodiscard]] int Count() const;
     List();
     void Add(int item);
     [[nodiscard]] int Get(int item) const;
